@@ -1,4 +1,8 @@
 RECETARIO-with-Python-Tkinter
+
+![Captura de pantalla 2023-03-21 014015](https://user-images.githubusercontent.com/73174174/226518514-29b9f6c4-65a6-422d-890e-da366d0a7b8d.png)
+
+
 Proyecto basado en python junto a una interfaz gráfica con la libreria TKinter para la Universidad Provincial de Administración, Tecnología y Oficios. (UPATecO)
 
 Recetario de cocina
