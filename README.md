@@ -1,4 +1,4 @@
-ECETARIO-with-Python-Tkinter
+RECETARIO-with-Python-Tkinter
 Proyecto basado en python junto a una interfaz gráfica con la libreria TKinter para la Universidad Provincial de Administración, Tecnología y Oficios. (UPATecO)
 
 Recetario de cocina
