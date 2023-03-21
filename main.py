@@ -516,11 +516,13 @@ class Recetario:
             fecha_entry.insert(0, nombre_receta['fecha_creacion'])
             fecha_entry.grid(row=6, column=1)
 
-
+            #creamos un label frame para los botones que diga Acciones
+            label_frame = tk.LabelFrame(self.editar_receta_window, text="Acciones")
+            label_frame.grid(row=7, column=0, columnspan=2, padx=10, pady=10)
             # Creamos un botón para guardar los cambios
-            tk.Button(self.editar_receta_window, text="Guardar cambios", command=lambda: self.guardar_cambios(nombre_entry.get(), ingredientes_entry.get(), pasos_entry.get(), categoria_entry.get(), tiempo_preparacion_entry.get(), tiempo_coccion_entry.get(), nombre_receta, fecha_entry.get())).grid(row=7, column=0, columnspan=2, padx=10, pady=10)
+            tk.Button(label_frame, text="Guardar cambios", command=lambda: self.guardar_cambios(nombre_entry.get(), ingredientes_entry.get(), pasos_entry.get(), categoria_entry.get(), tiempo_preparacion_entry.get(), tiempo_coccion_entry.get(), fecha_entry.get(), nombre_receta)).grid(row=7, column=0, padx=10, pady=10)
             # Creamos un botón para cancelar los cambios
-            tk.Button(self.editar_receta_window, text="Cancelar", command=self.editar_receta_window.destroy).grid(row=7, column=0, columnspan=2, padx=10, pady=10)
+            tk.Button(label_frame, text="Cancelar", command=self.editar_receta_window.destroy).grid(row=7, column=1, padx=10, pady=10)
 
     #funcion para guardar los cambios
     def guardar_cambios(self, nombre, ingredientes, pasos, categoria, tiempo_preparacion, tiempo_coccion, fecha_creacion, receta):
@@ -565,8 +567,12 @@ class Recetario:
         #creamos un frame para la receta
         receta_frame = tk.Frame(self.receta_del_dia_window)
         receta_frame.pack(padx=10, pady=10)
+
         #creamos un titulo para la receta
         tk.Label(receta_frame, text="Receta del día", font=("Arial", 25)).grid(row=0, column=0, columnspan=2, padx=10, pady=10)
+        #encerramos todo en un label Frame para que se vea bonito
+        receta_frame = tk.LabelFrame(receta_frame, text="Receta", font=("Arial", 15))
+        receta_frame.grid(row=1, column=0, columnspan=2, padx=10, pady=10)
         #creamos un label para el nombre de la receta
         tk.Label(receta_frame, text="Nombre de la receta: ").grid(row=1, column=0, padx=10, pady=10)
         #creamos un label para mostrar el nombre de la receta
@@ -598,7 +604,7 @@ class Recetario:
 
         
         #creamos un boton para cerrar la ventana
-        tk.Button(receta_frame, text="Cerrar", command=self.receta_del_dia_window.destroy).grid(row=7, column=0, columnspan=2, padx=10, pady=10)
+        tk.Button(self.receta_del_dia_window, text="Cerrar", command=self.receta_del_dia_window.destroy).pack(pady=10)
 
 #inicio de la aplicación
 if __name__ == "__main__":
