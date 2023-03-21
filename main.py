@@ -1,4 +1,5 @@
 import json
+import random
 import tkinter as tk
 from tkinter import messagebox
 from tkinter import ttk
@@ -75,6 +76,9 @@ class Recetario:
         #creamos un boton para ver las recetas
         self.ver_receta_button = tk.Button(self.botones_frame, text="Ver Receta", command=self.ver_receta)
         self.ver_receta_button.pack(side="left")
+        #creamos un boton para Receta del dia
+        self.receta_del_dia_button = tk.Button(self.botones_frame, text="Receta del dia", command=self.receta_del_dia)
+        self.receta_del_dia_button.pack(side="left")
         #creamos un boton para actualizar las recetas
         self.actualizar_receta_button = tk.Button(self.botones_frame, text="Actualizar Receta", command=self.actualizar_lista_recetas)
         self.actualizar_receta_button.pack(side="left")
@@ -548,9 +552,53 @@ class Recetario:
         # Cerramos la ventana de editar receta
         self.editar_receta_window.destroy()
 
+    #funcion para receta del dia aleatoria
+    def receta_del_dia(self):
+        #seleccionamos una receta aleatoria
+        receta_aleatoria = random.choice(self.recetas)
+        print(receta_aleatoria)
+        #creamos una ventana nueva
+        self.receta_del_dia_window = tk.Toplevel()
+        self.receta_del_dia_window.title("Receta del día")
+        self.receta_del_dia_window.geometry("500x500")
+        self.receta_del_dia_window.resizable(0, 0)
+        #creamos un frame para la receta
+        receta_frame = tk.Frame(self.receta_del_dia_window)
+        receta_frame.pack(padx=10, pady=10)
+        #creamos un titulo para la receta
+        tk.Label(receta_frame, text="Receta del día", font=("Arial", 25)).grid(row=0, column=0, columnspan=2, padx=10, pady=10)
+        #creamos un label para el nombre de la receta
+        tk.Label(receta_frame, text="Nombre de la receta: ").grid(row=1, column=0, padx=10, pady=10)
+        #creamos un label para mostrar el nombre de la receta
+        tk.Label(receta_frame, text=receta_aleatoria['nombre']).grid(row=1, column=1, padx=10, pady=10)
+        #creamos un label para los ingredientes
+        tk.Label(receta_frame, text="Ingredientes: ").grid(row=2, column=0, padx=10, pady=10)
+        #creamos un label para mostrar los ingredientes
+        tk.Label(receta_frame, text=receta_aleatoria['ingredientes']).grid(row=2, column=1, padx=10, pady=10)
+        #creamos un label para las instrucciones
+        tk.Label(receta_frame, text="Instrucciones: ").grid(row=3, column=0, padx=10, pady=10)
+        #creamos un label para mostrar las instrucciones
+        tk.Label(receta_frame, text=receta_aleatoria['instrucciones']).grid(row=3, column=1, padx=10, pady=10)
+        #creamos un label para la categoria
+        tk.Label(receta_frame, text="Categoria: ").grid(row=4, column=0, padx=10, pady=10)
+        #creamos un label para mostrar la categoria
+        tk.Label(receta_frame, text=receta_aleatoria['categoria']).grid(row=4, column=1, padx=10, pady=10)
+        #creamos un label para el tiempo de preparacion
+        tk.Label(receta_frame, text="Tiempo de preparación: ").grid(row=5, column=0, padx=10, pady=10)
+        #creamos un label para mostrar el tiempo de preparacion
+        tk.Label(receta_frame, text=receta_aleatoria['tiempo_preparacion']).grid(row=5, column=1, padx=10, pady=10)
+        #creamos un label para el tiempo de coccion
+        tk.Label(receta_frame, text="Tiempo de cocción: ").grid(row=6, column=0, padx=10, pady=10)
+        #creamos un label para mostrar el tiempo de coccion
+        tk.Label(receta_frame, text=receta_aleatoria['tiempo_coccion']).grid(row=6, column=1, padx=10, pady=10)
+        #creamos un label para la fecha de creacion
+        tk.Label(receta_frame, text="Fecha de creación: ").grid(row=7, column=0, padx=10, pady=10)
+        #creamos un label para mostrar la fecha de creacion
+        tk.Label(receta_frame, text=receta_aleatoria['fecha_creacion']).grid(row=7, column=1, padx=10, pady=10)
 
-
-
+        
+        #creamos un boton para cerrar la ventana
+        tk.Button(receta_frame, text="Cerrar", command=self.receta_del_dia_window.destroy).grid(row=7, column=0, columnspan=2, padx=10, pady=10)
 
 #inicio de la aplicación
 if __name__ == "__main__":
