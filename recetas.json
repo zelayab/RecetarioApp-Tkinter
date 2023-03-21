@@ -1,0 +1,110 @@
+[
+    {
+        "nombre": "asdas",
+        "categoria": "asdas",
+        "ingredientes": "asdas",
+        "instrucciones": "asdas",
+        "tiempo_coccion": "234",
+        "tiempo_preparacion": "123",
+        "fecha_creacion": "Monday 20. March 2023"
+    },
+    {
+        "nombre": "xxxx",
+        "categoria": "asdas2",
+        "ingredientes": "asdas",
+        "instrucciones": "asdas",
+        "tiempo_coccion": "234",
+        "tiempo_preparacion": "123",
+        "fecha_creacion": "Monday 20. March 2023"
+    },
+    {
+        "nombre": "xxx44x",
+        "categoria": "Carnes",
+        "ingredientes": "asdas",
+        "instrucciones": "asdas",
+        "tiempo_coccion": "234",
+        "tiempo_preparacion": "123",
+        "fecha_creacion": "Monday 20. March 2023"
+    },
+    {
+        "nombre": "wexxx",
+        "categoria": "Carnes",
+        "ingredientes": "asdasd",
+        "instrucciones": "asdas",
+        "tiempo_coccion": "234",
+        "tiempo_preparacion": "1123",
+        "fecha_creacion": "Monday 20. March 2023"
+    },
+    {
+        "nombre": "\u00c3\u00b1oquis",
+        "categoria": "Pastas",
+        "ingredientes": "asdasd",
+        "instrucciones": "asdasdas",
+        "tiempo_coccion": "23",
+        "tiempo_preparacion": "15",
+        "fecha_creacion": "Monday 20. March 2023"
+    },
+    {
+        "nombre": "sorrentinos",
+        "categoria": "Pastas",
+        "ingredientes": "asdasd",
+        "instrucciones": "adasdas",
+        "tiempo_coccion": "234",
+        "tiempo_preparacion": "12312",
+        "fecha_creacion": "Monday 20. March 2023"
+    },
+    {
+        "nombre": "canelones",
+        "ingredientes": "asdasdas",
+        "instrucciones": "asdas",
+        "categoria": "Pastas",
+        "tiempo_preparacion": "12",
+        "tiempo_coccion": "123",
+        "fecha_creacion": "Monday 20. March 2023"
+    },
+    {
+        "nombre": "agnolotis",
+        "ingredientes": "asdas\tasd",
+        "instrucciones": "asdasdas - asdasdas -as asdasdas",
+        "categoria": "Pastas",
+        "tiempo_preparacion": "33",
+        "tiempo_coccion": "2233",
+        "fecha_creacion": "Monday 20. March 2023"
+    },
+    {
+        "nombre": "vvvvv",
+        "categoria": "Carnes",
+        "ingredientes": "asdas",
+        "instrucciones": "asdas",
+        "tiempo_coccion": "234",
+        "tiempo_preparacion": "12323",
+        "fecha_creacion": "Monday 20. March 2023"
+    },
+    {
+        "nombre": "Lomito",
+        "categoria": "Carnes",
+        "ingredientes": "asdasdas",
+        "instrucciones": "asdasdasdas",
+        "tiempo_coccion": "234",
+        "tiempo_preparacion": "123",
+        "fecha_creacion": "Monday 20. March 2023"
+    },
+    {
+        "nombre": "jjjjjjj",
+        "categoria": "Pastas",
+        "ingredientes": "asdasd",
+        "instrucciones": "asdas",
+        "tiempo_coccion": "234",
+        "tiempo_preparacion": "11123",
+        "fecha_creacion": "Monday 20. March 2023"
+    },
+    {
+        "nombre": "Mejillones",
+        "categoria": "Pescados",
+        "ingredientes": "asdasda",
+        "instrucciones": "asdasd",
+        "tiempo_coccion": "234231231231",
+        "tiempo_preparacion": "23232132",
+        "fecha_creacion": "Monday 20. March 2023"
+    }
+]
