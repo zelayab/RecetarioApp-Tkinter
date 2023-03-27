@@ -24,7 +24,8 @@ class Recetario:
         self.master = master
         self.master.title("Recetario")
         self.master.geometry("600x400")
-
+        
+        #creamos una lista para las categorias
         self.categorias = []
         self.recetas = []
         self.recetas_listbox = None
@@ -245,12 +246,12 @@ class Recetario:
                     instrucciones = receta['instrucciones']
                     tiempo_coccion = receta['tiempo_coccion']
                     tiempo_preparacion = receta['tiempo_preparacion']
-                    fecha_creacion = receta['fecha_creacion']
+                    fecha_label = receta['fecha_label']
                     imagen = receta['imagen_url']
 
 
         #creamos un infobox con los datos de la receta con saltos de linea para poner debajo de cada dato
-        messagebox.showinfo("Receta", "Nombre: " + nombre + " \n\nCategoria: " + categoria + " \n\nIngredientes: " + ingredientes + " \n\ninstrucciones ( separado con guiones ) " + instrucciones + " \n\nTiempo de coccion ( en minutos ) " + tiempo_coccion + " \n\nTiempo de preparacion ( en minutos ) " + tiempo_preparacion + "\n\nFecha de creacion: " + fecha_creacion + " " + " \n\nImagen: " + imagen) 
+        messagebox.showinfo("Receta", "Nombre: " + nombre + " \n\nCategoria: " + categoria + " \n\nIngredientes: " + ingredientes + " \n\ninstrucciones ( separado con guiones ) " + instrucciones + " \n\nTiempo de coccion ( en minutos ) " + tiempo_coccion + " \n\nTiempo de preparacion ( en minutos ) " + tiempo_preparacion + "\n\nFecha de creacion: " + fecha_label + " " + " \n\nImagen: " + imagen) 
     
     #Funcion para guardar la receta
     def guardar_receta(self):
@@ -261,9 +262,9 @@ class Recetario:
         instrucciones = self.instrucciones_text.get("1.0", "end-1c")
         tiempo_coccion = self.tiempo_coccion_entry.get()
         tiempo_preparacion = self.tiempo_preparacion_entry.get()
-        fecha_creacion = str(datetime.datetime.now().strftime("%A %d. %B %Y"))
-        imagen_url = self.url_imagen_label.get()
-        print(fecha_creacion)
+        fecha_label = str(datetime.datetime.now().strftime("%A %d. %B %Y"))
+        imagen_url = self.imagen
+        print(fecha_label)
 
         # Creamos un diccionario con los datos de la receta
         nueva_receta = {
@@ -273,7 +274,7 @@ class Recetario:
             "instrucciones": instrucciones,
             "tiempo_coccion": tiempo_coccion,
             "tiempo_preparacion": tiempo_preparacion,
-            "fecha_creacion": fecha_creacion,
+            "fecha_label": fecha_label,
             "imagen url": imagen_url
         }
 
@@ -292,7 +293,7 @@ class Recetario:
             json.dump(recetas_dict, archivo, indent=4)
 
         #agregamos la receta al treeview colocandolo centrado en las row y column
-        self.recetas_tree.insert("", tk.END, text="", values=(nombre, categoria,fecha_creacion))
+        self.recetas_tree.insert("", tk.END, text="", values=(nombre, categoria,fecha_label))
         self.recetas_tree.column("#0", width=0, stretch=tk.NO)
 
 
@@ -303,8 +304,7 @@ class Recetario:
         self.instrucciones_text.delete("1.0", "end")
         self.tiempo_coccion_entry.delete(0, "end")
         self.tiempo_preparacion_entry.delete(0, "end")
-        self.url_imagen_label.set("")
-
+        self.imagen = None
         #mostramos un mensaje de que la receta se guardo correctamente
         messagebox.showinfo("Recetario", "Receta guardada correctamente.")
         #cerramos la ventana
@@ -449,10 +449,10 @@ class Recetario:
             # para saber si la receta en el diccionario es una lista o un diccionario
             if isinstance(receta, list):
                 for item in receta:
-                    self.recetas_tree.insert("", "end", values=(item['nombre'], item['categoria'],item['fecha_creacion']))
+                    self.recetas_tree.insert("", "end", values=(item['nombre'], item['categoria'],item['fecha_label']))
             # si no es una lista, es un diccionario
             elif isinstance(receta, dict):
-                self.recetas_tree.insert("", "end", values=(receta['nombre'], receta['categoria'],receta['fecha_creacion']))
+                self.recetas_tree.insert("", "end", values=(receta['nombre'], receta['categoria'],receta['fecha_label']))
                 self.recetas.append(receta)
     
     #Funcion para actualizar las recetas
@@ -466,7 +466,7 @@ class Recetario:
         #si la receta es una lista la agregamos al treeview
         if isinstance(recetas_dict, list):
             for item in recetas_dict:
-                self.recetas_tree.insert("", "end", values=(item['nombre'], item['categoria'],item['fecha_creacion']))
+                self.recetas_tree.insert("", "end", values=(item['nombre'], item['categoria'],item['fecha_label']))
         
     #Funcion de editar receta
     def editar_receta(self):
@@ -535,7 +535,7 @@ class Recetario:
             tk.Label(self.editar_receta_window, text="Fecha de creación: ").grid(row=6, column=0, padx=10, pady=10)
             #entry fecha
             fecha_entry = tk.Entry(self.editar_receta_window, width=30)
-            fecha_entry.insert(0, nombre_receta['fecha_creacion'])
+            fecha_entry.insert(0, nombre_receta['fecha_label'])
             fecha_entry.grid(row=6, column=1)
 
             #label imagen
@@ -631,7 +631,7 @@ class Recetario:
         #creamos un label para la fecha de creacion
         tk.Label(receta_frame, text="Fecha de creación: ").grid(row=7, column=0, padx=10, pady=10)
         #creamos un label para mostrar la fecha de creacion
-        tk.Label(receta_frame, text=receta_aleatoria['fecha_creacion']).grid(row=7, column=1, padx=10, pady=10)
+        tk.Label(receta_frame, text=receta_aleatoria['fecha_label']).grid(row=7, column=1, padx=10, pady=10)
         #creamos un label para la imagen
         tk.Label(receta_frame, text="Imagen: ").grid(row=8, column=0, padx=10, pady=10)
         #si la imagen es larga se puede mostrar en un label
