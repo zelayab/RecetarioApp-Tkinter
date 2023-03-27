@@ -1,12 +1,20 @@
+# importamos las librerias necesarias
+import sys
+sys.path.append('/usr/local/lib/python3.11/site-packages')
+
 import json
 import random
 import tkinter as tk
-from tkinter import messagebox
+from tkinter import Image, messagebox
 from tkinter import ttk
+from tkinter import filedialog
 import tkinter.messagebox as mb
 import os
-#para la fecha usamos datetime
 import datetime
+
+
+
+
 
 ruta = os.path.join(os.path.dirname(__file__), 'recetas.json')
 
@@ -22,7 +30,8 @@ class Recetario:
         self.recetas_listbox = None
         # Creamos un Entry para el nombre de la receta en el método agregar_receta()
         self.nombre_entry = None
-        #cargamos las recetas
+        global ruta_imagen
+
         
         #creamos un menu con varias opciones
         self.menu = tk.Menu(self.master)
@@ -144,12 +153,20 @@ class Recetario:
         #el label de la fecha se tiene que poner automatico
         self.fecha_label = tk.Label(self.agregar_receta_window, text="Fecha: " + str(datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")))
         self.fecha_label.pack()
-        
+        #creamos un label que va a mostrar la url de la imagen seleccionada
+        self.url_imagen_label = tk.Label(self.agregar_receta_window, text="URL de la imagen:")
+        self.url_imagen_label.pack()
 
+        #creamos un boton para seleccionar la imagen
+        self.seleccionar_imagen_button = tk.Button(self.agregar_receta_window, text="Seleccionar Imagen", command=self.seleccionar_imagen)
+        self.seleccionar_imagen_button.pack()
+
+        #creamos un label para mostrar la imagen seleccionada
+        self.imagen_label = tk.Label(self.agregar_receta_window)
+        self.imagen_label.pack()
 
         #creamos un espacio entre los frames
         self.espacio_label = tk.Label(self.agregar_receta_window, text="")
-        self.espacio_label.pack()
 
         #creamos un frame label para agrupar los botones
         self.botones_frame = tk.LabelFrame(self.agregar_receta_window, text="Botones")
@@ -229,10 +246,11 @@ class Recetario:
                     tiempo_coccion = receta['tiempo_coccion']
                     tiempo_preparacion = receta['tiempo_preparacion']
                     fecha_creacion = receta['fecha_creacion']
+                    imagen = receta['imagen_url']
 
 
         #creamos un infobox con los datos de la receta con saltos de linea para poner debajo de cada dato
-        messagebox.showinfo("Receta", "Nombre: " + nombre + " \n\nCategoria: " + categoria + " \n\nIngredientes: " + ingredientes + " \n\ninstrucciones ( separado con guiones ) " + instrucciones + " \n\nTiempo de coccion ( en minutos ) " + tiempo_coccion + " \n\nTiempo de preparacion ( en minutos ) " + tiempo_preparacion + "\n\nFecha de creacion: " + fecha_creacion)
+        messagebox.showinfo("Receta", "Nombre: " + nombre + " \n\nCategoria: " + categoria + " \n\nIngredientes: " + ingredientes + " \n\ninstrucciones ( separado con guiones ) " + instrucciones + " \n\nTiempo de coccion ( en minutos ) " + tiempo_coccion + " \n\nTiempo de preparacion ( en minutos ) " + tiempo_preparacion + "\n\nFecha de creacion: " + fecha_creacion + " " + " \n\nImagen: " + imagen) 
     
     #Funcion para guardar la receta
     def guardar_receta(self):
@@ -244,6 +262,7 @@ class Recetario:
         tiempo_coccion = self.tiempo_coccion_entry.get()
         tiempo_preparacion = self.tiempo_preparacion_entry.get()
         fecha_creacion = str(datetime.datetime.now().strftime("%A %d. %B %Y"))
+        imagen_url = self.url_imagen_label.get()
         print(fecha_creacion)
 
         # Creamos un diccionario con los datos de la receta
@@ -254,7 +273,8 @@ class Recetario:
             "instrucciones": instrucciones,
             "tiempo_coccion": tiempo_coccion,
             "tiempo_preparacion": tiempo_preparacion,
-            "fecha_creacion": fecha_creacion
+            "fecha_creacion": fecha_creacion,
+            "imagen url": imagen_url
         }
 
         # Agregamos la receta al diccionario
@@ -272,7 +292,7 @@ class Recetario:
             json.dump(recetas_dict, archivo, indent=4)
 
         #agregamos la receta al treeview colocandolo centrado en las row y column
-        self.recetas_tree.insert("", tk.END, text="", values=(nombre, categoria, tiempo_coccion, tiempo_preparacion), iid=nombre, anchor=tk.CENTER)
+        self.recetas_tree.insert("", tk.END, text="", values=(nombre, categoria,fecha_creacion))
         self.recetas_tree.column("#0", width=0, stretch=tk.NO)
 
 
@@ -283,6 +303,7 @@ class Recetario:
         self.instrucciones_text.delete("1.0", "end")
         self.tiempo_coccion_entry.delete(0, "end")
         self.tiempo_preparacion_entry.delete(0, "end")
+        self.url_imagen_label.set("")
 
         #mostramos un mensaje de que la receta se guardo correctamente
         messagebox.showinfo("Recetario", "Receta guardada correctamente.")
@@ -310,7 +331,8 @@ class Recetario:
                     'categoria': receta['categoria'],
                     'ingredientes': receta['ingredientes'],
                     'preparacion': receta['preparacion'],
-                    'tiempo': receta['tiempo']
+                    'tiempo': receta['tiempo'],
+                    'imagen': receta['imagen']
                 }
         #para corroborar que se guardo como diccionario dentro del diccionario
         print(recetas_dict)
@@ -516,9 +538,16 @@ class Recetario:
             fecha_entry.insert(0, nombre_receta['fecha_creacion'])
             fecha_entry.grid(row=6, column=1)
 
+            #label imagen
+            tk.Label(self.editar_receta_window, text="Imagen: ").grid(row=7, column=0, padx=10, pady=10)
+            #entry imagen
+            imagen_entry = tk.Entry(self.editar_receta_window, width=30)
+            imagen_entry.insert(0, nombre_receta['imagen_url'])
+            imagen_entry.grid(row=7, column=1)
+
             #creamos un label frame para los botones que diga Acciones
             label_frame = tk.LabelFrame(self.editar_receta_window, text="Acciones")
-            label_frame.grid(row=7, column=0, columnspan=2, padx=10, pady=10)
+            label_frame.grid(row=8, column=0, columnspan=2, padx=10, pady=10)
             # Creamos un botón para guardar los cambios
             tk.Button(label_frame, text="Guardar cambios", command=lambda: self.guardar_cambios(nombre_entry.get(), ingredientes_entry.get(), pasos_entry.get(), categoria_entry.get(), tiempo_preparacion_entry.get(), tiempo_coccion_entry.get(), fecha_entry.get(), nombre_receta)).grid(row=7, column=0, padx=10, pady=10)
             # Creamos un botón para cancelar los cambios
@@ -534,7 +563,8 @@ class Recetario:
             'categoria': categoria,
             'tiempo_preparacion': tiempo_preparacion,
             'tiempo_coccion': tiempo_coccion,
-            'fecha_creacion': fecha_creacion
+            'fecha_creacion': fecha_creacion,
+            'imagen': receta['imagen']
         }
 
         # Buscamos la receta en el diccionario de recetas
@@ -559,17 +589,18 @@ class Recetario:
         #seleccionamos una receta aleatoria
         receta_aleatoria = random.choice(self.recetas)
         print(receta_aleatoria)
+
         #creamos una ventana nueva
         self.receta_del_dia_window = tk.Toplevel()
         self.receta_del_dia_window.title("Receta del día")
-        self.receta_del_dia_window.geometry("500x500")
+        self.receta_del_dia_window.geometry("800x600")
         self.receta_del_dia_window.resizable(0, 0)
         #creamos un frame para la receta
         receta_frame = tk.Frame(self.receta_del_dia_window)
         receta_frame.pack(padx=10, pady=10)
 
         #creamos un titulo para la receta
-        tk.Label(receta_frame, text="Receta del día", font=("Arial", 25)).grid(row=0, column=0, columnspan=2, padx=10, pady=10)
+        tk.Label(receta_frame, text="La Receta del día", font=("Arial", 25)).grid(row=0, column=0, columnspan=2, padx=10, pady=10)
         #encerramos todo en un label Frame para que se vea bonito
         receta_frame = tk.LabelFrame(receta_frame, text="Receta", font=("Arial", 15))
         receta_frame.grid(row=1, column=0, columnspan=2, padx=10, pady=10)
@@ -601,32 +632,27 @@ class Recetario:
         tk.Label(receta_frame, text="Fecha de creación: ").grid(row=7, column=0, padx=10, pady=10)
         #creamos un label para mostrar la fecha de creacion
         tk.Label(receta_frame, text=receta_aleatoria['fecha_creacion']).grid(row=7, column=1, padx=10, pady=10)
-
+        #creamos un label para la imagen
+        tk.Label(receta_frame, text="Imagen: ").grid(row=8, column=0, padx=10, pady=10)
+        #si la imagen es larga se puede mostrar en un label
+        tk.Label(receta_frame, text=receta_aleatoria['imagen_url'], wraplength=300).grid(row=8, column=1, padx=10, pady=10)
         
         #creamos un boton para cerrar la ventana
-        tk.Button(self.receta_del_dia_window, text="Cerrar", command=self.receta_del_dia_window.destroy).pack(pady=10)
+        tk.Button(self.receta_del_dia_window, text="Cerrar", command=self.receta_del_dia_window.destroy).pack(padx=10, pady=10)
+
+    #funcion para seleccionar la imagen
+    def seleccionar_imagen(self):
+        # Seleccionamos la imagen
+        self.imagen = filedialog.askopenfilename(initialdir="/", title="Selecciona una imagen", filetypes=(("Archivos de imagen", "*.jpg *.png"), ("Todos los archivos", "*.*")))
+        print('esta es la imagen', self.imagen)
+        # para mostrar la url de la imagen
+        self.imagen_label.config(text=self.imagen)
+       
+        
 
 #inicio de la aplicación
 if __name__ == "__main__":
     root = tk.Tk()
     app = Recetario(root)
     root.mainloop()
-
-
-## un diccionario ejemplo de receta
-# receta = {
-#     'nombre': 'Tortilla de patatas',
-#     'ingredientes': '4 huevos, 2 patatas, 1 cebolla, 1 pimiento verde, 1 pimiento rojo, 1 tomate, 1 cucharada de aceite de oliva, sal, pimienta',
-#     'instrucciones': 'Cortar las patatas en rodajas finas, la cebolla en juliana, los pimientos en tiras y el tomate en rodajas. Salpimentar y freír en una sartén con aceite de oliva. Batir los huevos y salpimentar. Añadir la mezcla de patatas y freír la tortilla.',
-#     'categoria': 'Desayuno',
-#     'tiempo_preparacion': '30',
-#     'tiempo_coccion': '15'
-# }
-# una lista ejemplo de recetas
-# recetas = [r
-#     receta,
-#     {
-#         'nombre': 'Ensalada de pasta',
-#         'ingredientes': '1 paquete de pasta, 1 tomate, 1 cebolla, 1 pimiento verde, 1 pimiento rojo, 1 cucharada de aceite de oliva, sal, pimienta',
-
 
