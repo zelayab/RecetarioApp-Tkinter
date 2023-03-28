@@ -275,7 +275,7 @@ class Recetario:
             "tiempo_coccion": tiempo_coccion,
             "tiempo_preparacion": tiempo_preparacion,
             "fecha_label": fecha_label,
-            "imagen url": imagen_url
+            "imagen_url": imagen_url
         }
 
         # Agregamos la receta al diccionario
